@@ -1,4 +1,4 @@
-# Analisador de Investimentos (Opção 1)
+# Analisador de Investimentos
 
 ## 🎯 Objetivo
 Aplicação web construída para a disciplina de Engenharia Econômica com o objetivo de apoiar a tomada de decisão de um profissional de engenharia de software: **Desenvolver uma funcionalidade agora ou adiar sua entrega**. A ferramenta compara o desembolso inicial e os benefícios futuros de duas alternativas utilizando o cálculo do **Valor Presente Líquido (VPL)**.
