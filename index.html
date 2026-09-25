@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Analisador de Investimentos - VPL</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Analisador de Investimentos</h1>
+        <p class="subtitle">Decisão: Desenvolver uma funcionalidade agora ou adiar?</p>
+
+        <div class="controls-top">
+            <button id="btnCarregarExemplo" class="btn-secondary">Carregar Exemplo de Teste</button>
+            <button id="btnCenarioOtimista" class="btn-secondary" style="background-color: #27ae60;">+ Otimista (+20% receitas)</button>
+            <button id="btnCenarioPessimista" class="btn-secondary" style="background-color: #e74c3c;">- Pessimista (-20% receitas)</button>
+        </div>
+
+        <div id="msgErro" class="error-msg" style="display: none;"></div>
+
+        <div class="form-container">
+            <div class="card">
+                <h3>⚙️ Premissas Gerais</h3>
+                <div class="form-group">
+                    <label for="taxa">Taxa de Desconto (% ao período):</label>
+                    <input type="number" id="taxa" step="0.01" placeholder="Ex: 10">
+                </div>
+                <div class="form-group">
+                    <label for="horizonte">Horizonte de Tempo (nº períodos):</label>
+                    <input type="number" id="horizonte" min="1" max="12" value="5">
+                </div>
+                <p class="hint">Os períodos (meses ou anos) devem ser os mesmos para a taxa e os fluxos.</p>
+            </div>
+
+            <div class="alternativas-wrapper">
+                <div class="card alternativa-card">
+                    <h3>🚀 Alternativa A: Desenvolver Agora</h3>
+                    <div class="form-group">
+                        <label for="invA">Investimento Inicial (R$ - Momento 0):</label>
+                        <input type="number" id="invA" step="0.01" placeholder="Ex: 25000">
+                    </div>
+                    <h4>Fluxos de Caixa por Período (R$)</h4>
+                    <p class="hint">Preencha as entradas/receitas previstas.</p>
+                    <div id="fluxosA-container" class="fluxos-grid"></div>
+                </div>
+
+                <div class="card alternativa-card">
+                    <h3>⏳ Alternativa B: Adiar Funcionalidade</h3>
+                    <div class="form-group">
+                        <label for="invB">Investimento Inicial (R$ - Momento 0):</label>
+                        <input type="number" id="invB" step="0.01" placeholder="Ex: 10000">
+                    </div>
+                    <h4>Fluxos de Caixa por Período (R$)</h4>
+                    <p class="hint">Preencha as entradas/receitas previstas.</p>
+                    <div id="fluxosB-container" class="fluxos-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button id="btnCalcular" class="btn-primary">Calcular e Comparar VPL</button>
+        </div>
+
+        <div id="resultados" class="card resultados" style="display: none;">
+            <h2>📊 Resultados e Recomendação</h2>
+            
+            <div class="comparacao">
+                <div class="resultado-item" id="resA">
+                    <h3>Alternativa A</h3>
+                    <p>VPL: <br><strong class="valor" id="vplA">R$ 0,00</strong></p>
+                </div>
+                <div class="resultado-item" id="resB">
+                    <h3>Alternativa B</h3>
+                    <p>VPL: <br><strong class="valor" id="vplB">R$ 0,00</strong></p>
+                </div>
+            </div>
+
+            <div id="recomendacao" class="recomendacao"></div>
+
+            <div class="explicacao">
+                <strong>O que é o VPL?</strong> O Valor Presente Líquido (VPL) traz todos os fluxos de caixa futuros ao seu valor de hoje. Um VPL maior que zero indica criação de valor financeiro.
+            </div>
+
+            <h3 style="margin-top: 30px;">Gráfico Comparativo de VPL</h3>
+            <div class="grafico">
+                <div class="barra-container">
+                    <span class="label">Alt A</span>
+                    <div id="barraA" class="barra barra-a"></div>
+                    <span class="valor-grafico" id="valorBarraA"></span>
+                </div>
+                <div class="barra-container" style="margin-top: 15px;">
+                    <span class="label">Alt B</span>
+                    <div id="barraB" class="barra barra-b"></div>
+                    <span class="valor-grafico" id="valorBarraB"></span>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 30px;">Tabela de Fluxos (Nominal vs Descontado)</h3>
+            <div style="overflow-x: auto;">
+                <table id="tabelaFluxos">
+                    <!-- Preenchido via JS -->
+                </table>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="btnExportar" class="btn-secondary" style="width: 50%;">Exportar Resultados (JSON)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/calculos.js"></script>
+    <script src="js/dados_exemplo.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
