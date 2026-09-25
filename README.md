@@ -1,36 +1,49 @@
 # Analisador de Investimentos (Opção 1)
 
-Projeto acadêmico para a disciplina de Engenharia Econômica. O objetivo é auxiliar engenheiros de software na tomada de decisão (desenvolver agora ou adiar), baseando-se no Valor Presente Líquido (VPL).
+## 🎯 Objetivo
+Aplicação web construída para a disciplina de Engenharia Econômica com o objetivo de apoiar a tomada de decisão de um profissional de engenharia de software: **Desenvolver uma funcionalidade agora ou adiar sua entrega**. A ferramenta compara o desembolso inicial e os benefícios futuros de duas alternativas utilizando o cálculo do **Valor Presente Líquido (VPL)**.
 
-## 🛠 Tecnologias e Dependências
-- **Interface e Lógica:** HTML, CSS e JavaScript puro (Vanilla JS).
-- **Testes:** NodeJS (apenas para ambiente de desenvolvimento/validação).
-- **Nenhuma dependência externa/NPM** é necessária para rodar a aplicação. Todos os arquivos são autocontidos.
+## 👥 Integrantes da Equipe
+*   Alexandre Santos
+*   José Mauro
+*   Pedro Queiroz
 
-## 🚀 Como Instalar e Executar (Interface Visual)
+## 🛠 Tecnologia
+- **Interface e Lógica:** HTML5, CSS3 e JavaScript puro (Vanilla JS).
+- **Testes de Cálculo:** NodeJS (apenas para ambiente de desenvolvimento/validação matemática no terminal).
+- O projeto não utiliza frameworks externos ou dependências na interface. Todos os arquivos são autocontidos e rodam localmente no navegador.
+
+## 🚀 Instruções de Execução (Interface)
 O projeto roda perfeitamente em modo local (File-System), dispensando a instalação de servidores web.
-1. Abra a pasta principal do projeto.
-2. Dê um duplo clique no arquivo `index.html`.
-3. O navegador padrão irá abrir a aplicação pronta para uso.
+1. Baixe ou clone este repositório para o seu computador.
+2. Abra a pasta principal do projeto.
+3. Dê um duplo clique no arquivo `index.html`.
+4. O navegador padrão irá abrir a aplicação pronta para uso.
 
-## 🧪 Como Rodar os Testes (Núcleo Matemático)
-Existe uma bateria de testes automatizados que valida a correção matemática da regra de VPL.
-1. Instale o [Node.js](https://nodejs.org/).
-2. Abra o terminal na raiz do projeto.
-3. Rode:
+## 🧪 Instruções de Testes (Núcleo Matemático)
+Existe uma bateria de testes automatizados que valida a correção matemática isoladamente.
+1. Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
+2. Abra o terminal (Prompt de Comando/PowerShell) na raiz do projeto.
+3. Execute o comando:
    ```bash
    node testes/calculos.test.js
    ```
-   A saída indicará `[PASSOU]` ou `[FALHOU]` para cada caso, incluindo tratamento de divisão por zero e taxa ausente.
+A saída indicará o sucesso `[PASSOU]` dos casos normais e extremos (tratamento de divisão por zero, erros de digitação e validações de arrays).
 
-## 🚧 Limitações do Modelo
-1. **Periodicidade:** Apenas números inteiros são aceitos como período. Não é possível lançar um fluxo no "mês 1.5".
-2. **Precisão Monentária:** Foi aplicada uma função de tolerância (0.01 centavo) nos testes devido às imprecisões do sistema de ponto flutuante do JavaScript em cálculos complexos exponenciais.
-3. **Custo Fixo vs Atraso:** O cenário de "adiar" é simulado mudando manualmente o investimento inicial de R$ no mês zero para um período posterior nas grades de fluxo (preenchendo negativo), pois a matemática em si desconhece a lógica semântica de "adiar".
+## 📋 Dados de Exemplo
+A aplicação vem com um botão **"Carregar Exemplo de Teste"** que preenche automaticamente a tela com:
+*   **Premissas Gerais:** Taxa de Desconto de 10% ao período; Horizonte de 5 períodos.
+*   **Alternativa A (Desenvolver Agora):** Investimento de R$ 25.000,00 no Mês 0 e fluxo único de R$ 45.000,00 no Mês 5. (Resultado Esperado: VPL = R$ 2.941,46)
+*   **Alternativa B (Adiar):** Dados extraídos do material didático (Investimento Mês 0: R$ 10.000, Fluxo Mês 3: R$ 15.000).
 
-## 📖 Exemplo de Uso Prático
-1. Abra o `index.html`.
-2. Clique em **"Carregar Exemplo de Teste"**.
-3. O cenário da "Opção 3 do PDF" (Inv=25k, Ganho=45k no final) será preenchido.
-4. Clique em **"Calcular e Comparar"**.
-5. Em seguida, utilize os botões **"+ Otimista"** ou **"- Pessimista"** no topo da página para ver o VPL se alterando dinamicamente na tabela e no gráfico (Análise de Sensibilidade). Você pode ainda exportar esses cenários para JSON no final da tela.
+## 📈 Descrição dos Indicadores
+*   **Valor Presente (VP):** É o valor de um montante futuro trazido para a data presente, aplicando a taxa de desconto.
+*   **Valor Presente Líquido (VPL):** É o indicador central de decisão. Ele soma todos os Valores Presentes das receitas e subtrai os Valores Presentes dos custos (incluindo o investimento inicial).
+    *   **VPL > 0:** O projeto cria valor financeiro.
+    *   **VPL < 0:** O projeto destrói valor nas premissas atuais.
+    *   **Critério de Decisão:** Entre duas opções, opta-se por aquela que retornar o **maior VPL**. Se ambos forem negativos, a ferramenta alerta sobre a inviabilidade.
+
+## 🚧 Limitações
+1. **Periodicidade:** Apenas números inteiros são aceitos como período (meses, anos). Não é possível lançar um fluxo fracionado (ex: "mês 1.5"). Ambas as alternativas precisam respeitar o horizonte global de tempo.
+2. **Precisão Monetária:** Foi aplicada uma margem de tolerância (0.01 centavo) nos testes de backend para mitigar imprecisões do sistema de ponto flutuante padrão da linguagem JavaScript em cálculos exponenciais.
+3. **Semântica do Atraso:** O cenário de "adiar funcionalidade" exige que o usuário lance o custo inicial atrasado diretamente como um "fluxo de caixa negativo" no mês desejado, pois o algoritmo matemático por baixo não compreende o conceito estratégico de "adiar", enxergando apenas a matriz de pagamentos no tempo.
